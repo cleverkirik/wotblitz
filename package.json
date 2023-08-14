@@ -1,5 +1,30 @@
 {
   "dependencies": {
     "axios": "^0.27.2"
-  }
+  },
+  "name": "wotblitz.js",
+  "description": "wotblitz.js",
+  "version": "0.0.1",
+  "main": "./src/index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cleverkirik/wotblitz.git"
+  },
+  "keywords": [
+    "wotb",
+    "wargaming",
+    "wargaming.net",
+    "javascript",
+    "node.js"
+  ],
+  "author": "cleverkirik",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cleverkirik/wotblitz/issues"
+  },
+  "homepage": "https://github.com/cleverkirik/wotblitz#readme"
 }
