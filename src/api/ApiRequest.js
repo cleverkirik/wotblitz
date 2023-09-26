@@ -3,7 +3,13 @@ const axios = require('axios');
 class ApiRequest {
     async get(path, realm) {
         try {
-            let req = await axios({method: 'get', url: `https://api.wotblitz.${realm}/wotb/` + path});
+            let apiUrl;
+            if(realm == 'ru') {
+                apiUrl = 'https://papi.tanksblitz.ru/wotb/';
+            } else {
+                apiUrl = `https://api.wotblitz.${realm}/wotb/`
+            }
+            let req = await axios({method: 'get', url: apiUrl + path});
             if(req.data.status == 'ok') return req.data;
             else if(req.data.status == 'error') {
                 let err = Error(`API error ${req.data.error.code}: ${req.data.error.message} in field '${req.data.error.field}' and value '${req.data.error.value}'`)
@@ -16,7 +22,13 @@ class ApiRequest {
     }
     async post(path, realm, post) {
         try {
-            let req = await axios({method: 'post', url: `https://api.wotblitz.${realm}/wotb/` + path, data: post});
+            let apiUrl;
+            if(realm == 'ru') {
+                apiUrl = 'https://papi.tanksblitz.ru/wotb/';
+            } else {
+                apiUrl = `https://api.wotblitz.${realm}/wotb/`
+            }
+            let req = await axios({method: 'post', url: apiUrl + path, data: post});
             if(req.data.status == 'ok') return req.data;
             else if(req.data.status == 'error') {
                 let err = Error(`API error ${req.data.error.code}: ${req.data.error.message} in field '${req.data.error.field}' and value '${req.data.error.value}'`)
