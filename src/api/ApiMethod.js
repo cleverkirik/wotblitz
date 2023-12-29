@@ -1,6 +1,7 @@
 const ApiClient = require("../client/ApiClient");
 const Client = require("../client/Client");
 const Achievement = require("../structures/Achievement");
+const ApiError = require("../structures/ApiError");
 const Clan = require("../structures/Clan");
 const ClanMember = require("../structures/ClanMember");
 const Player = require("../structures/Player");
@@ -42,6 +43,7 @@ class ApiMethod {
             if(options.realm) realm = options.realm;
         }
         let data = await this.api.requests.get(path, realm);
+        if(data.status == 'error') return new ApiError(data.error);
         let array = [];
         for(let a in data.data) {
             array.push(new SearchedPlayer(this.client, data.data[a], realm));
@@ -58,6 +60,7 @@ class ApiMethod {
             if(options.language) path += `&language=${options.language}`;
         }
         let data = await this.api.requests.get(path, realm);
+        if(data.status == 'error') return new ApiError(data.error);
         if(data.data[id] == null) return null;
         else return new Player(this.client, data.data[id], realm);
     }
@@ -86,6 +89,7 @@ class ApiMethod {
             if(options.realm) realm = options.realm;
         }
         let data = await this.api.requests.get(path, realm);
+        if(data.status == 'error') return new ApiError(data.error);
         return data.data;
     }
     async getPlayerAchievments(id, realm, options=null) {
@@ -95,6 +99,7 @@ class ApiMethod {
             if(options.language) path += `&language=${options.language}`;
         }
         let data = await this.api.requests.get(path, realm);
+        if(data.status == 'error') return new ApiError(data.error);
         let allach = await this.getAchievments({realm: realm});
         let allAchievements = {};
         for(let a in allach) {
@@ -119,6 +124,7 @@ class ApiMethod {
             if(options.language) path += `&language=${options.language}`;
         }
         let data = await this.api.requests.get(path, realm);
+        if(data.status == 'error') return new ApiError(data.error);
         return new PlayerClanData(data.data[id]);
     }
 
@@ -134,6 +140,7 @@ class ApiMethod {
             if(options.realm) realm = options.realm;
         }
         let data = await this.api.requests.get(path, realm);
+        if(data.status == 'error') return new ApiError(data.error);
         let array = [];
         for(let a in data.data) {
             array.push(new SearchedClan(this.client, data.data[a], realm));
@@ -149,6 +156,7 @@ class ApiMethod {
             if(options.language) path += `&language=${options.language}`;
         }
         let data = await this.api.requests.get(path, realm);
+        if(data.status == 'error') return new ApiError(data.error);
         return new Clan(this.client, data.data[id], realm);
     }
     
@@ -172,6 +180,7 @@ class ApiMethod {
         }
 
         let data = await this.api.requests.get(path, realm);
+        if(data.status == 'error') return new ApiError(data.error);
         let array = []
         for(let i in data.data) {
             if(data.data[i] != null)
@@ -190,6 +199,7 @@ class ApiMethod {
             if(options.tankID) path += `&tank_id=${options.tankID}`;
         }
         let data = await this.api.requests.get(path, realm);
+        if(data.status == 'error') return new ApiError(data.error);
         let array = [];
         for(let a in data.data[id]) {
             array.push(new TankStats(this.client, realm, data.data[id][a]));
