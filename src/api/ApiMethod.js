@@ -24,7 +24,7 @@ class ApiMethod {
          */
         this.client = client;
     }
-        /**
+    /**
      * Search Players.
      * @param {string} search - Search.
      * @param {object} options - Options.
@@ -50,7 +50,12 @@ class ApiMethod {
         }
         return array;
     }
-
+    /**
+     * Get players.
+     * @param {string | number | string[] | number[]} id - Search.
+     * @param {string} realm - Realm.
+     * @param {object} options - Options.
+     */
     async getPlayer(id, realm, options=null) {
         let path = `account/info/?application_id=${this.client.token}&account_id=${id}`;
         if(options != null) {
@@ -61,8 +66,17 @@ class ApiMethod {
         }
         let data = await this.api.requests.get(path, realm);
         if(data.status == 'error') return new ApiError(data.error);
-        if(data.data[id] == null) return null;
-        else return new Player(this.client, data.data[id], realm);
+        if(Array.isArray(id)) {
+            let playersArr = [];
+            for(let a in id) {
+                if(data.data[id[a]] == null) playersArr.push(null);
+                else playersArr.push(new Player(this.client, data.data[id[a]], realm));
+            }
+            return playersArr;
+        } else {
+            if(data.data[id] == null) return null;
+            else return new Player(this.client, data.data[id], realm);
+        }
     }
 
     async getPlayerPrivateDataContacts(contacts, realm) {
