@@ -10,7 +10,7 @@ class ApiRequest {
             } else {
                 apiUrl = `https://api.wotblitz.${realm}/wotb/`
             }
-            let req = await axios({method: 'get', url: apiUrl + path, timeout: 60000, httpsAgent: new https.Agent({ keepAlive: true })});
+            let req = await axios({method: 'get', url: apiUrl + path, timeout: 300000, httpsAgent: new https.Agent({ keepAlive: true })});
             /*if(req.data.status == 'ok') return req.data;
             else if(req.data.status == 'error') {
                 let err = Error(`API error ${req.data.error.code}: ${req.data.error.message} in field '${req.data.error.field}' and value '${req.data.error.value}'`)
@@ -30,7 +30,7 @@ class ApiRequest {
             } else {
                 apiUrl = `https://api.wotblitz.${realm}/wotb/`
             }
-            let req = await axios({method: 'post', url: apiUrl + path, data: post, timeout: 60000, httpsAgent: new https.Agent({ keepAlive: true })});
+            let req = await axios({method: 'post', url: apiUrl + path, data: post, timeout: 300000, httpsAgent: new https.Agent({ keepAlive: true })});
             /*if(req.data.status == 'ok') return req.data;
             else if(req.data.status == 'error') {
                 let err = Error(`API error ${req.data.error.code}: ${req.data.error.message} in field '${req.data.error.field}' and value '${req.data.error.value}'`)
