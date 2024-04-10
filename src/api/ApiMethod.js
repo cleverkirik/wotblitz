@@ -171,6 +171,13 @@ class ApiMethod {
         }
         let data = await this.api.requests.get(path, realm);
         if(data.status == 'error') return new ApiError(data.error);
+        if(Array.isArray(id)) {
+            let clansArr = [];
+            for(let a in id) {
+                clansArr.push(new Clan(this.client, data.data[id[a]], realm));
+            }
+            return clansArr;
+        }
         return new Clan(this.client, data.data[id], realm);
     }
     
